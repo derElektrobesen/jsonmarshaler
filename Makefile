@@ -5,7 +5,7 @@ GENERATED_FILES = \
 	foreach.h
 
 all: generate
-	cc main.c -o main.c.out -E
+	cc main.c -o main.out.c -E
 
 generate: $(GENERATED_FILES)
 
@@ -19,9 +19,9 @@ args_counter.h:
 
 foreach.h:
 	seq 2 $(MAX_ARGS) | xargs -I{} bash -c '\
-		echo "#define __JSON_FOREACH_ITER_{}(ACTION, X, ...) \\" >> $@;\
-		echo -e "\tACTION(X) \\" >> $@;\
-		echo -e "\t__JSON_FOREACH_ITER_$$(({}-1))(ACTION, __VA_ARGS__)" >> $@;\
+		echo "#define __JSON_FOREACH_ITER_{}(ACTION, ARG, X, ...) \\" >> $@;\
+		echo -e "\tACTION(ARG, X) \\" >> $@;\
+		echo -e "\t__JSON_FOREACH_ITER_$$(({}-1))(ACTION, ARG, __VA_ARGS__)" >> $@;\
 		echo >> $@'
 
 clean:

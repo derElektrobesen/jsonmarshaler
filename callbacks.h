@@ -6,23 +6,11 @@
 #include "lib.h"
 #include "declarators.h"
 
-#define __JSON_FIELD_GETTER_CB_TYPE_NAME(name) \
-	JSON_CONCAT(__JSON_OBJ_NAME(name), __field_getter)
-
-#define __JSON_FIELD_SETTER_CB_TYPE_NAME(name) \
-	JSON_CONCAT(__JSON_OBJ_NAME(name), __field_setter)
-
 #define __JSON_FIELD_MARSHALER(field_declarator) \
 	JSON_CONCAT(__MARSHALER_, field_declarator)
 
 #define __JSON_FIELD_UNMARSHALER(field_declarator) \
 	JSON_CONCAT(__UNMARSHALER_, field_declarator)
-
-#define __JSON_DECLARE_CALLBACKS_TYPES(name) \
-	typedef const struct json_error *(*__JSON_FIELD_GETTER_CB_TYPE_NAME(name)) \
-		(const struct __JSON_OBJ_NAME(name) *obj, char **dest); \
-	typedef const struct json_error *(*__JSON_FIELD_SETTER_CB_TYPE_NAME(name)) \
-		(const char *data, struct __JSON_OBJ_NAME(name) *dest);
 
 #define __JSON_GEN_MARSHAL_CALLBACK(obj_name, field_declarator) \
 	static const struct json_error *__JSON_MARSHAL_CB_NAME(obj_name, field_declarator) \
@@ -45,7 +33,6 @@
 	JSON_FOREACH(__JSON_GEN_UNMARSHAL_CALLBACK, name, __VA_ARGS__)
 
 #define __JSON_DECLARE_CALLBACKS(name, ...) \
-	__JSON_DECLARE_CALLBACKS_TYPES(name) \
 	__JSON_DECLARE_CALLBACKS_IMPL(name, __VA_ARGS__) \
 
 #endif

@@ -5,7 +5,7 @@ GENERATED_FILES = \
 	foreach.h
 
 all: generate
-	cc main.c -o main.out.c -E
+	cc main.c -o main.generated.c -E
 
 generate: $(GENERATED_FILES)
 
@@ -25,6 +25,6 @@ foreach.h:
 		echo >> $@'
 
 clean:
-	rm -f $(GENERATED_FILES)
+	rm -f $(GENERATED_FILES) main.generate.c
 
 .PHONY: all generate generate_args_counter
